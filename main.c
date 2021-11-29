@@ -1,6 +1,12 @@
 #include <stdio.h>
+#include <string.h>
 
 int main(void) {
-  printf("Hello World\n");
+  char input[250];
+
+  fgets(input, 250, stdin);
+
+  printf("%s", input);
+  
   return 0;
 }
