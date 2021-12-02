@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 void PrintMenu();
 void ExecuteMenu(char choice, char input[250]);
+int CharCheck(char choice);
+int GetNumOfNonWSCharacters(char input[250]);
 
 int main(void) {
   char input[250];
   char choice;
+  bool valid;
   //gets and prints input
   printf("Enter a sample text:\n");
 
@@ -19,30 +23,11 @@ int main(void) {
   
   //get choice
   printf("Choose an option: \n");
-  choices: 
-  scanf("%c", &choice);
-  switch(choice){
-    case 'c':
-      printf("%c", choice);
-      break;
-    case 'w':
-      printf("%c", choice);
-      break;
-    case 'f':
-      printf("%c", choice);
-      break;
-    case 'r':
-      printf("%c", choice);
-      break;
-    case 's':
-      printf("%c", choice);
-      break;
-    case 'q':
-      printf("%c", choice);
-      break;
-    default:
-      goto choices;
-  }
+  do{
+    scanf("%c", &choice);
+    valid = CharCheck(choice);
+  } while(valid);
+  ExecuteMenu(choice, input);
   return 0;
 }
 void PrintMenu(){
@@ -56,8 +41,44 @@ void PrintMenu(){
 }
 
 void ExecuteMenu(char choice, char input[250]){
-    
+    switch(choice){
+    case 'c':
+      printf("%d", GetNumOfNonWSCharacters(input));
+      break;
+    case 'w':
+      break;
+    case 'f':
+      break;
+    case 'r':
+      break;
+    case 's':
+      break;
+    case 'q':
+      break;
+  }
   
   
   
+}
+
+int CharCheck(char choice){
+  switch(choice){
+    case 'c':
+    case 'w':
+    case 'f':
+    case 'r':
+    case 's':
+    case 'q':
+      return false;
+      break;
+    default:
+      return true;
+  }
+
+}
+
+int GetNumOfNonWSCharacters(char input[250]){
+  return 9;
+
+
 }
