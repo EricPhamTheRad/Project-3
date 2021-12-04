@@ -7,6 +7,10 @@ void ExecuteMenu(char choice, char input[250]);
 int CharCheck(char choice);
 int GetNumOfNonWSCharacters(char input[250]);
 
+
+
+void ReplaceExclamation(char input[250]);
+
 int main(void) {
   char input[250];
   char choice;
@@ -50,6 +54,8 @@ void ExecuteMenu(char choice, char input[250]){
     case 'f':
       break;
     case 'r':
+      ReplaceExclamation(input);
+      printf("%s", input);
       break;
     case 's':
       break;
@@ -78,7 +84,21 @@ int CharCheck(char choice){
 }
 
 int GetNumOfNonWSCharacters(char input[250]){
-  return 9;
+  int counter = 0;
 
+  for(int i = 0; i < strlen(input) - 1; i++){
+    if(input[i] != ' '){
+      counter++;
+    }
+  }
+  return counter;
+}
+
+void ReplaceExclamation(char input[250]){
+  for(int i = 0; i < strlen(input) - 1; i++){
+    if(input[i] == '!'){
+      input[i] = '.';
+    }
+  }
 
 }
