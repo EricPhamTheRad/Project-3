@@ -18,7 +18,7 @@ int main(void) {
   char input[250];
   char choice;
   bool valid;
-  
+
   //gets and prints input
   printf("Enter a sample text:\n");
 
@@ -33,11 +33,15 @@ int main(void) {
   printf("Choose an option: \n");
   do{
     scanf("%c", &choice);
+    //checkst to see if its a valid choice
     valid = CharCheck(choice);
   } while(valid);
+  //does choice to input
   ExecuteMenu(choice, input);
   return 0;
 }
+
+//prints menu options
 void PrintMenu(){
   printf("MENU\n");
   printf("c - Number of non-whitespace characters\n");
@@ -48,6 +52,7 @@ void PrintMenu(){
   printf("q - Quit\n");
 }
 
+//check what choice is made and does the choice
 void ExecuteMenu(char choice, char input[250]){
     switch(choice){
     case 'c':
@@ -72,11 +77,8 @@ void ExecuteMenu(char choice, char input[250]){
       _Exit(0);
       break;
   }
-  
-  
-  
 }
-
+//if its c, w, f, r, s, or q it returns false, false stops the while loop in main
 int CharCheck(char choice){
   switch(choice){
     case 'c':
@@ -92,7 +94,7 @@ int CharCheck(char choice){
   }
 
 }
-
+//interates through a string, each time it encounters a non space character it adds to counter
 int GetNumOfNonWSCharacters(char input[250]){
   int counter = 0;
 
@@ -104,16 +106,26 @@ int GetNumOfNonWSCharacters(char input[250]){
   return counter;
 }
 
+//learn this from this video: https://www.youtube.com/watch?v=cCdn7Cy6TfE
 int GetNumOfWords(char input[250]){
+  //two new strings theRest and token
   char *theRest, *token;
+  //the rest gets the stuff within input
   theRest = input;
   int count = 0;
+  /*strtok_r takes input string splits it at ' ', and stores it at token, adds to count. 
+  It goes throguht the entier string. I think this is how it works
+  */
   while((token = strtok_r(theRest, " ", &theRest))){
     count++;
   }
   return count;
 }
-
+/*
+Checks to see if its an ending punction mark.
+If so the next characters will be capitalized.
+Once it capitalizes it no longer capilize letter until flag is activated.
+*/
 void FixCapitalization(char input[250]){
   bool flag = false;
   input[0] = toupper(input[0]);
@@ -127,7 +139,7 @@ void FixCapitalization(char input[250]){
     }
   }
 }
-
+//iterates through string, if its an ! changes into .
 void ReplaceExclamation(char input[250]){
   for(int i = 0; i < strlen(input) - 1; i++){
     if(input[i] == '!'){
@@ -136,7 +148,12 @@ void ReplaceExclamation(char input[250]){
   }
 
 }
-
+//makes new string local
+//puts input into clone
+//iterates through string, if the current location is not a space or the next spot is also not a spaces it puts it into input
+// like ".  P", first postion . is not a spaces so it gets transfered
+// the second position it's a space and so is the next so it doesn't throught
+// the third postion is a space and but the ones next to it isn't so it goes through
 void ShortenSpace(char input[250]){
   int j = 0;
   char *clone;
@@ -147,6 +164,7 @@ void ShortenSpace(char input[250]){
          j++;
       }
    }
+   //adds terminator so it doens't break
    input[j] = '\0';
 
 }
