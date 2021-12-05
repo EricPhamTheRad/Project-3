@@ -1,20 +1,24 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-
+#include <stdlib.h>
+#include <ctype.h>
+//Prototypes
 void PrintMenu();
 void ExecuteMenu(char choice, char input[250]);
 int CharCheck(char choice);
 int GetNumOfNonWSCharacters(char input[250]);
-
-
-
+int GetNumOfWords(char input[250]);
+void FixCapitalization(char input[250]);
+void ShortenSpace(char input[250]);
 void ReplaceExclamation(char input[250]);
 
 int main(void) {
+  //varible
   char input[250];
   char choice;
   bool valid;
+  
   //gets and prints input
   printf("Enter a sample text:\n");
 
@@ -47,19 +51,25 @@ void PrintMenu(){
 void ExecuteMenu(char choice, char input[250]){
     switch(choice){
     case 'c':
-      printf("%d", GetNumOfNonWSCharacters(input));
+      printf("Number of non-whitespace characters: %d", GetNumOfNonWSCharacters(input));
       break;
     case 'w':
+      printf("Number of words: %d", GetNumOfWords(input));
       break;
     case 'f':
+      FixCapitalization(input);
+      printf("Edited text: %s", input);
       break;
     case 'r':
       ReplaceExclamation(input);
-      printf("%s", input);
+      printf("Edited text: %s", input);
       break;
     case 's':
+      ShortenSpace(input);
+      printf("Edited text: %s", input);
       break;
     case 'q':
+      _Exit(0);
       break;
   }
   
@@ -94,11 +104,49 @@ int GetNumOfNonWSCharacters(char input[250]){
   return counter;
 }
 
+int GetNumOfWords(char input[250]){
+  char *theRest, *token;
+  theRest = input;
+  int count = 0;
+  while((token = strtok_r(theRest, " ", &theRest))){
+    count++;
+  }
+  return count;
+}
+
+void FixCapitalization(char input[250]){
+  bool flag = false;
+  input[0] = toupper(input[0]);
+  for(int i = 0; i < strlen(input) - 1; i++){
+    if(input[i] == ('!') || input[i] == '.' || input[i] =='?'){
+      flag = true;
+    }
+    if(flag == true && isalpha(input[i]) != 0){
+      input[i] = toupper(input[i]);
+      flag = false;
+    }
+  }
+}
+
 void ReplaceExclamation(char input[250]){
   for(int i = 0; i < strlen(input) - 1; i++){
     if(input[i] == '!'){
       input[i] = '.';
     }
   }
+
+}
+
+void ShortenSpace(char input[250]){
+  int j = 0;
+  char *clone;
+  clone = input;
+   for(int i = 0; i < strlen(clone); i++){
+      if(clone [i] != ' ' || clone[i + 1] != ' '){
+         input[j] = clone[i];
+         j++;
+      }
+   }
+   input[j] = '\0';
 
 }
