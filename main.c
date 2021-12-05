@@ -27,17 +27,20 @@ int main(void) {
   printf("\nYou entered: %s\n", input);
   
   //print menu
+  while(true){
   PrintMenu();
   
   //get choice
-  printf("Choose an option: \n");
+  printf("Choose an option:");
+  printf("\n");
   do{
-    scanf("%c", &choice);
+    scanf("%c\n", &choice);
     //checkst to see if its a valid choice
     valid = CharCheck(choice);
   } while(valid);
   //does choice to input
   ExecuteMenu(choice, input);
+  }
   return 0;
 }
 
@@ -56,22 +59,22 @@ void PrintMenu(){
 void ExecuteMenu(char choice, char input[250]){
     switch(choice){
     case 'c':
-      printf("Number of non-whitespace characters: %d", GetNumOfNonWSCharacters(input));
+      printf("Number of non-whitespace characters: %d\n", GetNumOfNonWSCharacters(input) -1);
       break;
     case 'w':
-      printf("Number of words: %d", GetNumOfWords(input));
+      printf("Number of words: %d\n", GetNumOfWords(input));
       break;
     case 'f':
       FixCapitalization(input);
-      printf("Edited text: %s", input);
+      printf("Edited text: %s\n", input);
       break;
     case 'r':
       ReplaceExclamation(input);
-      printf("Edited text: %s", input);
+      printf("Edited text: %s\n", input);
       break;
     case 's':
       ShortenSpace(input);
-      printf("Edited text: %s", input);
+      printf("Edited text: %s\n", input);
       break;
     case 'q':
       _Exit(0);
@@ -98,7 +101,7 @@ int CharCheck(char choice){
 int GetNumOfNonWSCharacters(char input[250]){
   int counter = 0;
 
-  for(int i = 0; i < strlen(input) - 1; i++){
+  for(int i = 0; i < strlen(input); i++){
     if(input[i] != ' '){
       counter++;
     }
@@ -141,7 +144,7 @@ void FixCapitalization(char input[250]){
 }
 //iterates through string, if its an ! changes into .
 void ReplaceExclamation(char input[250]){
-  for(int i = 0; i < strlen(input) - 1; i++){
+  for(int i = 0; i < strlen(input); i++){
     if(input[i] == '!'){
       input[i] = '.';
     }
@@ -166,5 +169,4 @@ void ShortenSpace(char input[250]){
    }
    //adds terminator so it doens't break
    input[j] = '\0';
-
 }
